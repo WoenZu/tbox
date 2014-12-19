@@ -1,11 +1,15 @@
 "use strict";
 
+/**
+ *
+ * @param notifier
+ * @constructor
+ */
 function Config( notifier ) {
-	var notify = notifier; 
-	//function for notifycation
+	var notify = notifier;
 	// all variables of configuration file config.json
 
-	// example
+	// configuration example
 	// {
 	// 	"configuration":
 	// 		{
@@ -14,6 +18,7 @@ function Config( notifier ) {
 	// 		}
 	// }
 
+	//default configuration:
 	var config = {};
 	config.motd = 'Hello Chat World';
 	config.test = 'test property';
@@ -27,7 +32,11 @@ function Config( notifier ) {
 }
 
 
-
+/**
+ *
+ * @param file
+ * @param varForFile
+ */
 Config.prototype.checkForFileExistence = function ( file, varForFile) {
 	try {
 		varForFile = fs.readFileSync( file );
