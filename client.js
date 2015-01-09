@@ -1,7 +1,7 @@
 'use strict';
 
 function Client( sock ) {
-  this.sock = sock;
+  var clientSocket = sock;
   // TODO here will be all client data like IP, nick etc.
 }
 
