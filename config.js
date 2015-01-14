@@ -11,17 +11,13 @@ function Config( notifier ) {
 	var notify = notifier;
 	var config = {};
 
-	// all variables of configuration file config.json
-	// configuration example
+	// configuration file example
+	// config.json:
 	// {
-	// 	"configuration":
-	// 		{
-	// 			"MOTD": "Hello to trollbox server...",
-	// 			"test": "test property"
-	// 		}
+	//	 "MOTD": "Hello to trollbox server...",
+	//	 "test": "test property"
 	// }
 
-	//default configuration:
 	var defaultConfig = {};
 	defaultConfig.motd = 'Hello Chat World';
 	defaultConfig.test = 'test property';
@@ -32,30 +28,42 @@ function Config( notifier ) {
 
 	/**
 	 *
-	 * @param file
+	 * @param file - JSON format file
 	 */
-	this.setConfigurationFromFile = function( file ) {
+	this.loadConfigurationFromFile = function( file ) {
 		config = JSON.parse( file );
 	};
 
 	/**
 	 *
-	 * @param file - path to configuration file with name( process.cwd() )
-	 * @param varForFile - variable for loading configuration file from disc
+	 * @param pathToFile - path to configuration file with name( process.cwd() )
 	 */
-	this.checkForFileExistence = function ( file, varForFile ) {
+	this.checkForFileExistence = function ( pathToFile ) {
 		try {
-			varForFile = fs.readFileSync( file );
-			this.setConfigurationFromFile( varForFile );
+			this.loadConfigurationFromFile( fs.readFileSync( pathToFile ) );
 		} catch( e ) {
 			console.log( e );
+			notify( 'create a configuration file with the default settings' );
+
+			// TODO перед записью фийла со значениями по умолчанию проверить на возможность такой записи,
+			// TODO если запись не возможна
+			// TODO работа с конфигурацией по умолчанию должна быть проведена из памяти, без использования диска
+
+			// try {
+			// 		fs.writeFileSync( pathToFile, this.writeDefaultSettings() );
+			// } catch( e ) {
+			// 		notify( 'unable to write default config.json file to disk' );
+			// TODO need to load default config in memory
+			// }
+
+			fs.writeFileSync( pathToFile, this.writeDefaultSettings() );
+
 			// возможно понадобится обрабатывать ситуационные ошибки и в
 			// зависимости от конкретной ошибки выполнять соответствующие действаия
-			notify( 'create a configuration file with the default settings' );
-			fs.writeFileSync( file, this.writeDefaultSettings() );
+			// TODO накодить, действия, если запрещна запись на диск
+			// TODO и если файл соотвутстует по назавнию, но не соответствует содержанию
 
-			// запустить рекурсивно??
-			//checkForFileExistence( filename, varForFile )
+			this.checkForFileExistence( pathToFile );
 		}
 	};
 
@@ -63,10 +71,9 @@ function Config( notifier ) {
 		return config;
 	};
 
-	//check for file existance
-	//checkForFileExistence( filename, defaultContent)
+	//checkForFileExistence( filename )
 }
 
 module.exports.Config = Config;
 
-console.log('config module is loaded...');
+//console.log('config module is loaded...');
