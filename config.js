@@ -22,25 +22,30 @@ function Config( notifier ) {
 	defaultConfig.motd = 'Hello Chat World';
 	defaultConfig.test = 'test property';
 
-	this.writeDefaultSettings = function() {
-		return JSON.stringify( defaultConfig );
-	};
-
 	/**
 	 *
-	 * @param file - JSON format file
+	 * @param str - JSON format string
 	 */
-	this.loadConfigurationFromFile = function( file ) {
-		config = JSON.parse( file );
+	this.setConfiguration = function( str ) {
+		config = JSON.parse( str );
 	};
-
+	
+	this.getConfiguration = function() {
+		return config;
+	};
+	
+	this.getDefaultConfiguration = function() {
+		return JSON.stringify( defaultConfig ); //return JSON string
+	};
+	
 	/**
 	 *
-	 * @param pathToFile - path to configuration file with name( process.cwd() )
+	 * @param pathToFile - path to configuration file include name - process.cwd() + "/config.json"
 	 */
 	this.checkForFileExistence = function ( pathToFile ) {
 		try {
-			this.loadConfigurationFromFile( fs.readFileSync( pathToFile ) );
+			var str = fs.readFileSync( pathToFile );
+			this.setConfiguration( str );
 		} catch( e ) {
 			console.log( e );
 			notify( 'create a configuration file with the default settings' );
@@ -50,13 +55,14 @@ function Config( notifier ) {
 			// TODO работа с конфигурацией по умолчанию должна быть проведена из памяти, без использования диска
 
 			// try {
-			// 		fs.writeFileSync( pathToFile, this.writeDefaultSettings() );
+			// 		fs.writeFileSync( pathToFile, this.getDefaultConfiguration() );
 			// } catch( e ) {
 			// 		notify( 'unable to write default config.json file to disk' );
+			//		this.setConfiguration( this.getDefaultConfiguration() );
 			// TODO need to load default config in memory
 			// }
 
-			fs.writeFileSync( pathToFile, this.writeDefaultSettings() );
+			fs.writeFileSync( pathToFile, this.getDefaultConfiguration() );
 
 			// возможно понадобится обрабатывать ситуационные ошибки и в
 			// зависимости от конкретной ошибки выполнять соответствующие действаия
@@ -66,11 +72,6 @@ function Config( notifier ) {
 			this.checkForFileExistence( pathToFile );
 		}
 	};
-
-	this.getAllProperties = function() {
-		return config;
-	};
-
 	//checkForFileExistence( filename )
 }
 
