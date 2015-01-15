@@ -1,12 +1,11 @@
 "use strict";
-
 var fs = require( 'fs' );
 
 /**
- *
- * @param notifier - function for sending communication messages to other objects
- * @constructor
- */
+*
+* @param notifier - function for sending communication messages to other objects
+* @constructor
+*/
 function Config( notifier ) {
 	var notify = notifier;
 	var config = {};
@@ -14,8 +13,8 @@ function Config( notifier ) {
 	// configuration file example
 	// config.json:
 	// {
-	//	 "MOTD": "Hello to trollbox server...",
-	//	 "test": "test property"
+	// "MOTD": "Hello to trollbox server...",
+	// "test": "test property"
 	// }
 
 	var defaultConfig = {};
@@ -23,58 +22,55 @@ function Config( notifier ) {
 	defaultConfig.test = 'test property';
 
 	/**
-	 *
-	 * @param str - JSON format string
-	 */
+	*
+	* @param str - JSON format string
+	*/
 	this.setConfiguration = function( str ) {
 		config = JSON.parse( str );
 	};
-	
+
+	/**
+	 *
+	 * @returns { config object }
+	 */
 	this.getConfiguration = function() {
 		return config;
 	};
-	
-	this.getDefaultConfiguration = function() {
-		return JSON.stringify( defaultConfig ); //return JSON string
-	};
-	
+
 	/**
 	 *
-	 * @param pathToFile - path to configuration file include name - process.cwd() + "/config.json"
+	 * @returns { JSON string }
 	 */
-	this.checkForFileExistence = function ( pathToFile ) {
+	this.getDefaultConfiguration = function() {
+		return JSON.stringify( defaultConfig );
+	};
+
+	/**
+	*
+	* @param filePath - path to configuration file include name - process.cwd() + "/config.json"
+	*/
+	this.checkForFileExistence = function ( filePath ) {
 		try {
-			var str = fs.readFileSync( pathToFile );
+			var str = fs.readFileSync( filePath );
 			this.setConfiguration( str );
+			notify( '[DEBUG] configuration loading [OK]' );
 		} catch( e ) {
 			console.log( e );
-			notify( 'create a configuration file with the default settings' );
 
-			// TODO перед записью фийла со значениями по умолчанию проверить на возможность такой записи,
-			// TODO если запись не возможна
-			// TODO работа с конфигурацией по умолчанию должна быть проведена из памяти, без использования диска
-
-			// try {
-			// 		fs.writeFileSync( pathToFile, this.getDefaultConfiguration() );
-			// } catch( e ) {
-			// 		notify( 'unable to write default config.json file to disk' );
-			//		this.setConfiguration( this.getDefaultConfiguration() );
-			// TODO need to load default config in memory
-			// }
-
-			fs.writeFileSync( pathToFile, this.getDefaultConfiguration() );
-
-			// возможно понадобится обрабатывать ситуационные ошибки и в
+			// понадобится обрабатывать ситуационные ошибки и в
 			// зависимости от конкретной ошибки выполнять соответствующие действаия
-			// TODO накодить, действия, если запрещна запись на диск
-			// TODO и если файл соотвутстует по назавнию, но не соответствует содержанию
+			// в том числе если вываливается исключение на синтаксис JSON файла
+			notify( 'create a configuration with the default settings' );
+			this.setConfiguration( this.getDefaultConfiguration() );
 
-			this.checkForFileExistence( pathToFile );
+			try {
+				fs.writeFileSync( filePath, this.getDefaultConfiguration() );
+				notify( '[DEBUG] writing configuration to file [OK]' );
+			} catch( e ) {
+				notify( 'unable to write default config.json file to disk' );
+			}
 		}
 	};
-	//checkForFileExistence( filename )
+	//checkForFileExistence( filePath );
 }
-
 module.exports.Config = Config;
-
-//console.log('config module is loaded...');
