@@ -1,13 +1,11 @@
-var utils = require( './lib/utils' );
-var logit = require( './logit' ).LogIt;
+var utils = require( './utils' );
 var config = require( './config' ).Config;
 var fabric = require( './fabric').MessageFabric;
 var encoder = require( './encoder').Encoder;
 var userinfo = require( './userinfo').UserInfo;
 var client = require( './client').Client;
 
-module.exports.Utils = utils;
-module.exports.LogIt = logit;
+module.exports.utils = utils;
 module.exports.Config = config;
 module.exports.MessageFabric = fabric;
 module.exports.Encoder = encoder;
