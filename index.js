@@ -5,11 +5,11 @@ var encoder = require( './encoder').Encoder;
 var userinfo = require( './userinfo').UserInfo;
 var client = require( './client').Client;
 
-module.exports.utils = utils;
-module.exports.Config = config;
-module.exports.MessageFabric = fabric;
-module.exports.Encoder = encoder;
-module.exports.UserInfo = userinfo;
-module.exports.Client = client;
+exports.utils = utils;
+exports.Config = config;
+exports.MessageFabric = fabric;
+exports.Encoder = encoder;
+exports.UserInfo = userinfo;
+exports.Client = client;
 
 //console.log( 'index.js> tbox is loaded...' );
