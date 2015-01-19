@@ -1,8 +1,17 @@
 'use strict';
 
-function Client( sock ) {
-  var clientSocket = sock;
-  // TODO here will be all client data like IP, nick etc.
+function Client( socket ) {
+  var IP = socket.remoteAddress;
+  var port = socket.remotePort;
+  var nickName = '';
+
+  this.getIP = function() {
+    return IP;
+  };
+
+  this.getPort = function() {
+    return port;
+  };
 }
 
 exports.Client = Client;
