@@ -29,6 +29,18 @@ function checkFile ( filePath, defaultContent ) {
 	}
 }
 
+function getFilePath( fileName ) {
+	var path = '';
+	if( process.platform === 'win32' ) {
+		path = process.cwd() + '\\' + fileName;
+	} else if (process.platform === 'darwin') {
+		path = process.cwd() + '/' + fileName;
+	} else {
+		// linux
+	}
+	return path;
+}
+
 function LogIt( mod ) {
 	var module = mod;
 	this.setModule = function( string ) {
@@ -40,5 +52,7 @@ function LogIt( mod ) {
 	};
 }
 
-exports.LogIt = LogIt;
 exports.checkFile = checkFile;
+exports.getFilePath = getFilePath;
+exports.LogIt = LogIt;
+
