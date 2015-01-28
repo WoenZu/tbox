@@ -13,6 +13,10 @@ function Client( socket ) {
   this.getPort = function() {
     return port;
   };
+
+  this.register = function() {
+    isRegistered = true;
+  };
 }
 
 exports.Client = Client;
