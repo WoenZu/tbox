@@ -5,16 +5,16 @@ var fs = require( 'fs' );
  *
  * @param filePath - path to configuration file include name - process.cwd() + "/config.json"
  * @param defaultContent - object
- * @returns { object }
+ * @returns { object } - object that contains the configuration
  */
-function checkFile ( filePath, defaultContent ) {
+function checkFile( filePath, defaultContent ) {
 	try {
 		var conf = fs.readFileSync( filePath );
 		console.log( '[DEBUG] configuration loading [OK]' );
 		return JSON.parse( conf );
 	} catch( e ) {
 		console.log( e );
-		// понадобится обрабатывать ситуационные ошибки и в
+		// TODO понадобится обрабатывать ситуационные ошибки и в
 		// зависимости от конкретной ошибки выполнять соответствующие действаия
 		// в том числе если вываливается исключение на синтаксис JSON файла
 		console.log( 'create a configuration with the default settings' );
@@ -29,7 +29,12 @@ function checkFile ( filePath, defaultContent ) {
 	}
 }
 
-function getFilePath( fileName ) {
+/**
+ *
+ * @param fileName
+ * @returns {string} - path to file depends of OS
+ */
+function makePath( fileName ) {
 	var path = '';
 	if( process.platform === 'win32' ) {
 		path = process.cwd() + '\\' + fileName;
@@ -53,6 +58,6 @@ function LogIt( mod ) {
 }
 
 exports.checkFile = checkFile;
-exports.getFilePath = getFilePath;
+exports.makePath = makePath;
 exports.LogIt = LogIt;
 
