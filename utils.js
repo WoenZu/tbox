@@ -34,7 +34,7 @@ function checkFile( filePath, defaultContent ) {
  * @param fileName
  * @returns {string} - path to file depends of OS
  */
-function makePath( fileName ) {
+function createPath( fileName ) {
 	var path = '';
 	if( process.platform === 'win32' ) {
 		path = process.cwd() + '\\' + fileName;
@@ -58,6 +58,6 @@ function LogIt( mod ) {
 }
 
 exports.checkFile = checkFile;
-exports.makePath = makePath;
+exports.createPath = createPath;
 exports.LogIt = LogIt;
 
