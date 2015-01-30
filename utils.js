@@ -7,7 +7,7 @@ var fs = require( 'fs' );
  * @param defaultContent - object
  * @returns { object } - object that contains the configuration
  */
-function checkFile( filePath, defaultContent ) {
+function loadFile(filePath, defaultContent) {
 	try {
 		var conf = fs.readFileSync( filePath );
 		console.log( '[DEBUG] configuration loading [OK]' );
@@ -57,7 +57,7 @@ function LogIt( mod ) {
 	};
 }
 
-exports.checkFile = checkFile;
+exports.loadFile = loadFile;
 exports.createPath = createPath;
 exports.LogIt = LogIt;
 

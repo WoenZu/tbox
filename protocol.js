@@ -9,7 +9,7 @@ function Protocol() {
 
     msg.command = splStr[0];
     msg.param = splStr[1];
-
+    // TODO полная проверка параметров
 
     return msg;
   };
