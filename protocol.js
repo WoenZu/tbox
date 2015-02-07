@@ -4,13 +4,26 @@ function Protocol() {
   var msg = {};
 
   this.parseString = function( str ) {
+    try {
+      return JSON.parse( str );
+    } catch( e ) {
+      console.log( e );
+      return {
+        'cmd': 'ERROR',
+        'prm': [ 'protocol parse error' ]
+      }; //TODO test error message
+    }
+  };
 
-    var splStr = str.split(/\s/);
+  this.register = function( ip, nick ) {
+    msg.cmd = 'REGISTER';
+    msg.prm = [ ip, nick ];
+    return JSON.stringify( msg );
+  };
 
-    msg.command = splStr[0];
-    msg.param = splStr[1];
-    // TODO полная проверка параметров
-
+  this.registered = function() {
+    msg.cmd = 'REGISTERED';
+    msg.prm = [];
     return msg;
   };
 }
