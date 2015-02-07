@@ -1,12 +1,6 @@
 'use strict';
 var fs = require( 'fs' );
 
-/**
- *
- * @param filePath - path to configuration file include name - process.cwd() + "/config.json"
- * @param defaultContent - object
- * @returns { object } - object that contains the configuration
- */
 function loadFile(filePath, defaultContent) {
 	try {
 		var conf = fs.readFileSync( filePath );
@@ -29,11 +23,6 @@ function loadFile(filePath, defaultContent) {
 	}
 }
 
-/**
- *
- * @param fileName
- * @returns {string} - path to file depends of OS
- */
 function createPath( fileName ) {
 	var path = '';
 	if( process.platform === 'win32' ) {
