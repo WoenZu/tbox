@@ -1,4 +1,5 @@
 'use strict';
+var fs = require( 'fs' );
 var utils = require( './utils' );
 
 var loadFile = utils.loadFile;
@@ -13,6 +14,9 @@ function UserDB( filePath ) {
     path = p;
   };
 
+  this.getDBPath = function () {
+    return path;
+  };
   this.createUser = function( userName, userIP ) {
     var newUser = {};
     newUser.IP = userIP;
@@ -31,23 +35,46 @@ function UserDB( filePath ) {
     return newUser;
   };
 
+  this.addUser = function( user ) {
+    userDB.users.push( user );
+    console.log('%j', userDB );
+    this.saveDB();
+  };
+
   this.createDefaultDB = function () {
     this.addUser( this.createUser( 'admin', '127.0.0.1' ) );
     return userDB;
   };
 
-  this.addUser = function( user ) {
-    userDB.users.push( user );
-    this.saveDB();
-  };
-
-  this.loadDB = function( path, defaultDB) {
-    userDB = loadFile( path, defaultDB );//TODO refactor (loadFile func)
+  this.loadDB = function() {
+    try {
+      userDB = JSON.parse( fs.readFileSync( path ) );
+      console.log( '[DEBUG] DB loading [OK]' );
+    } catch( e ) {
+      console.log( e );
+      // TODO понадобится обрабатывать ситуационные ошибки и в
+      // зависимости от конкретной ошибки выполнять соответствующие действаия
+      // в том числе если вываливается исключение на синтаксис JSON файла
+      console.log( 'create default DB' );
+      userDB = this.createDefaultDB();
+      try {
+        fs.writeFileSync( path, JSON.stringify( userDB ) );
+        console.log( '[DEBUG] writing DB to file [OK]' );
+      } catch( e ) {
+        console.log('[DEBUG] unable to write default DB file to disk');
+      }
+    }
   };
 
   this.saveDB = function() {
-    // запись объекта базы в файл, асинхронно
-    //saveFile( userDB );
+    //TODO необходимо сделать асинхронную запсь
+    try {
+      fs.writeFileSync( path, JSON.stringify( userDB ) );
+        console.log('[DEBUG] UserDB successfully saved!');
+    } catch ( err ) {
+      console.log( err );
+      console.log( '[DEBUG] unable to save userDB with path: %j', path );
+    }
   };
 
   this.checkDBForUser = function( ip, nick ) {
