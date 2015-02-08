@@ -1,8 +1,6 @@
 'use strict';
-var fs = require( 'fs' );
-var utils = require( './utils' );
 
-var loadFile = utils.loadFile;
+var fs = require( 'fs' );
 
 function UserDB( filePath ) {
   var path = filePath;
@@ -17,6 +15,7 @@ function UserDB( filePath ) {
   this.getDBPath = function () {
     return path;
   };
+
   this.createUser = function( userName, userIP ) {
     var newUser = {};
     newUser.IP = userIP;
@@ -37,7 +36,6 @@ function UserDB( filePath ) {
 
   this.addUser = function( user ) {
     userDB.users.push( user );
-    console.log('%j', userDB );
     this.saveDB();
   };
 
@@ -57,23 +55,22 @@ function UserDB( filePath ) {
       // в том числе если вываливается исключение на синтаксис JSON файла
       console.log( 'create default DB' );
       userDB = this.createDefaultDB();
-      try {
-        fs.writeFileSync( path, JSON.stringify( userDB ) );
-        console.log( '[DEBUG] writing DB to file [OK]' );
-      } catch( e ) {
-        console.log('[DEBUG] unable to write default DB file to disk');
-      }
+      this.tryToWrite( 'default DB' );
     }
   };
 
   this.saveDB = function() {
     //TODO необходимо сделать асинхронную запсь
+    this.tryToWrite( 'userDB' );
+  };
+
+  this.tryToWrite = function( str ) {
     try {
       fs.writeFileSync( path, JSON.stringify( userDB ) );
-        console.log('[DEBUG] UserDB successfully saved!');
+      console.log('[DEBUG] %s successfully saved!', str );
     } catch ( err ) {
       console.log( err );
-      console.log( '[DEBUG] unable to save userDB with path: %j', path );
+      console.log( '[DEBUG] unable to save %s with path: %j', str, path );
     }
   };
 
