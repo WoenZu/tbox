@@ -1,6 +1,7 @@
 'use strict';
 
 function Client( socket ) {
+  var sock = socket;
   var IP = socket.remoteAddress;
   var port = socket.remotePort;
   var nickName = '';
@@ -16,6 +17,10 @@ function Client( socket ) {
 
   this.register = function() {
     isRegistered = true;
+  };
+
+  this.getSocket = function() {
+    return sock;
   };
 }
 
