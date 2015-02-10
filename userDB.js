@@ -12,11 +12,11 @@ function UserDB( filePath ) {
     path = p;
   };
 
-  this.getDBPath = function () {
+  this.getDBPath = function() {
     return path;
   };
 
-  this.createUser = function( userName, userIP ) {
+  this.createUser = function( userIP, userName ) {
     var newUser = {};
     newUser.IP = userIP;
     newUser.nickname = userName;
@@ -24,7 +24,7 @@ function UserDB( filePath ) {
     newUser.avatar = '';
     newUser.status = 'pending'; // pending, active, banned
 
-    if( userName == 'admin' ) {
+    if ( userName == 'admin' ) {
       newUser.access = 3;
       newUser.status = 'active';
     }
@@ -39,7 +39,7 @@ function UserDB( filePath ) {
     this.saveDB();
   };
 
-  this.createDefaultDB = function () {
+  this.createDefaultDB = function() {
     this.addUser( this.createUser( 'admin', '127.0.0.1' ) );
     return userDB;
   };
@@ -76,8 +76,9 @@ function UserDB( filePath ) {
 
   this.checkDBForUser = function( ip, nick ) {
     for ( var i = 0; i < userDB.users.length; i++) {
-      if ( userDB.users[ i ].nickname == nick && userDB.users[ i ].IP == ip ) {
-        return true;
+
+      if ( userDB.users[ i ].IP == ip ) {
+        if ( userDB.users[ i ].nickname == nick ) { return true; }
       } else {
         return false;
       }
