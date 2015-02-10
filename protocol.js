@@ -15,16 +15,18 @@ function Protocol() {
     }
   };
 
-  this.register = function( ip, nick ) {
+  this.register = function( ipAddress, nickName ) {
     msg.cmd = 'REGISTER';
-    msg.prm = [ ip, nick ];
+    msg.id = { ip: ipAddress, nick: nickName };
+    msg.prm = [];
     return JSON.stringify( msg );
   };
 
-  this.registered = function() {
+  this.registered = function( str ) {
     msg.cmd = 'REGISTERED';
-    msg.prm = [];
-    return msg;
+    msg.id = {};
+    msg.prm = [ str ];
+    return JSON.stringify( msg );
   };
 }
 
