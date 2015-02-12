@@ -40,7 +40,7 @@ function UserDB( filePath ) {
   };
 
   this.createDefaultDB = function() {
-    this.addUser( this.createUser( 'admin', '127.0.0.1' ) );
+    this.addUser( this.createUser( '127.0.0.1', 'admin' ) );
     return userDB;
   };
 
