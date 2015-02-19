@@ -16,5 +16,3 @@ exports.Client = client;
 exports.Protocol = proto;
 exports.SocketPool = socketpool;
 exports.UserDB = userDB;
-
-//console.log( 'index.js> tbox is loaded...' );
