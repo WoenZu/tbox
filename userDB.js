@@ -20,18 +20,21 @@ function UserDB( filePath ) {
     var newUser = {};
     newUser.IP = userIP;
     newUser.nickname = userName;
-    newUser.access = 3; // 0-admin, 1 - , 2 - , 3 - common user
+    newUser.admin = false;
     newUser.avatar = '';
     newUser.status = 'pending'; // pending, active, banned
-
-    if ( userName == 'admin' ) {
-      newUser.access = 3;
-      newUser.status = 'active';
-    }
 
     //TODO проверка валидности ip адреса и никнейма
 
     return newUser;
+  };
+
+  this.createAdmin = function( userIP ) {
+    var admin = {};
+    admin = this.createUser( userIP, 'admin' );
+    admin.admin = true;
+    admin.status = 'active';
+    return admin;
   };
 
   this.addUser = function( user ) {
@@ -39,8 +42,13 @@ function UserDB( filePath ) {
     this.saveDB();
   };
 
+  this.removeUser = function( user ) {
+    // a  is index for delete
+    // userDB.users.splice( a, 1 );
+  };
+
   this.createDefaultDB = function() {
-    this.addUser( this.createUser( '127.0.0.1', 'admin' ) );
+    this.addUser( this.createAdmin( '127.0.0.1' ) );
     return userDB;
   };
 
@@ -74,9 +82,8 @@ function UserDB( filePath ) {
     }
   };
 
-  this.checkDBForUser = function( ip, nick ) {
+  this.checkForUser = function( ip, nick ) {
     for ( var i = 0; i < userDB.users.length; i++) {
-
       if ( userDB.users[ i ].IP == ip ) {
         if ( userDB.users[ i ].nickname == nick ) { return true; }
       } else {
