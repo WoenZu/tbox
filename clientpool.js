@@ -22,20 +22,25 @@ function ClientPool() {
 
   this.getClientById = function( ident ) {
     var id = splitIdent( ident );
+    var ip = id[ 0 ];
+    var port = id[ 1 ];
+
     for ( var i = 0; i < pool.length; i++ ) {
-      if ( pool[ i ].getIP() == id[ 0 ] ) {
-        if ( pool[ i ].getPort() == id[ 1 ] ) { return pool[ i ]; }
+      if ( pool[ i ].getIP() == ip ) {
+        if ( pool[ i ].getPort() == port ) { return pool[ i ]; }
       } else {
         return null;
       }
     }
   };
 
-  this.getClientIndex = function( ident ) {
-    var id = splitIdent( ident );
+  this.getClientIndex = function( client ) {
+    var ip = client.getIP();
+    var port = client.getPort();
+
     for ( var i = 0; i < pool.length; i++ ) {
-      if ( pool[ i ].getIP() == id[0]) {
-        if (pool[i].getPort() == id[1]) { return i; }
+      if ( pool[ i ].getIP() == ip ) {
+        if ( pool[ i ].getPort() == port ) { return i; }
       } else {
         return null;
       }
