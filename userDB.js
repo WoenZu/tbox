@@ -1,7 +1,10 @@
 'use strict';
 
 var fs = require( 'fs' );
+var tutils = require( './tutils' );
+var splitIdent = tutils.splitIdent;
 
+console.log(tutils);
 function UserDB( filePath ) {
   var path = filePath;
   var userDB = {
@@ -16,9 +19,10 @@ function UserDB( filePath ) {
     return path;
   };
 
-  this.createUser = function( userIP, userName ) {
+  this.createUser = function( ident, userName ) {
+    var id = splitIdent( ident );
     var newUser = {};
-    newUser.IP = userIP;
+    newUser.IP = id[ 0 ];
     newUser.nickname = userName;
     newUser.admin = false;
     newUser.avatar = '';
@@ -82,9 +86,11 @@ function UserDB( filePath ) {
     }
   };
 
-  this.checkForUser = function( ip, nick ) {
+  this.checkForUser = function( ident, nick ) {//TODO repeating code
+    var ip = splitIdent( ident );
+
     for ( var i = 0; i < userDB.users.length; i++) {
-      if ( userDB.users[ i ].IP == ip ) {
+      if ( userDB.users[ i ].IP == ip[ 0 ] ) {
         if ( userDB.users[ i ].nickname == nick ) { return true; }
       } else {
         return false;
