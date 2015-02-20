@@ -4,7 +4,6 @@ var fs = require( 'fs' );
 var tutils = require( './tutils' );
 var splitIdent = tutils.splitIdent;
 
-console.log(tutils);
 function UserDB( filePath ) {
   var path = filePath;
   var userDB = {
