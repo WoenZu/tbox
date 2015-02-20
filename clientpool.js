@@ -1,26 +1,41 @@
 'use strict';
 
+var tutils = require( './tutils' );
+var splitIdent = tutils.splitIdent;
+
 function ClientPool() {
   var pool = [];
 
-  this.add = function( sock ) {
-    pool.push( sock );
+  this.addClient = function( client ) {
+    pool.push( client );
   };
 
-  this.remove = function( sock ) {
-    //remove socket
-    for ( var i = 0; i < pool.length; i++ ) {
-
+  this.removeClient = function( client ) {
+    var  index = this.getClientIndex( client );
+    try {
+      pool.splice( index, 1);
+    } catch ( err ) {
+      console.log( err );
+      console.log( '[ERROR] Client is not found.' );
     }
-    pool.splice( i, 1);
   };
 
-  this.getClientById = function( id ) {
-    var ip = id.ip.split( /\:/ ); //127.0.0.1:6666
-
+  this.getClientById = function( ident ) {
+    var id = splitIdent( ident );
     for ( var i = 0; i < pool.length; i++ ) {
-      if ( pool[ i ].getIP() == ip[ 0 ] ) {
-        if ( pool[ i ].getPort() == ip[ 1 ] ) { return pool[i]; }
+      if ( pool[ i ].getIP() == id[ 0 ] ) {
+        if ( pool[ i ].getPort() == id[ 1 ] ) { return pool[ i ]; }
+      } else {
+        return null;
+      }
+    }
+  };
+
+  this.getClientIndex = function( ident ) {
+    var id = splitIdent( ident );
+    for ( var i = 0; i < pool.length; i++ ) {
+      if ( pool[ i ].getIP() == id[0]) {
+        if (pool[i].getPort() == id[1]) { return i; }
       } else {
         return null;
       }
