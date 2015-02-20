@@ -22,6 +22,12 @@ function Client( socket ) {
   this.getSocket = function() {
     return sock;
   };
+
+  this.getIdent = function() {
+    var ident = '';
+    ident = this.getIP() + ':' + this.getPort();
+    return ident;
+  };
 }
 
 exports.Client = Client;
