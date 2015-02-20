@@ -1,10 +1,18 @@
 'use strict';
 
-function SocketPool() {
+function ClientPool() {
   var pool = [];
 
-  this.push = function( sock ) {
+  this.add = function( sock ) {
     pool.push( sock );
+  };
+
+  this.remove = function( sock ) {
+    //remove socket
+    for ( var i = 0; i < pool.length; i++ ) {
+
+    }
+    pool.splice( i, 1);
   };
 
   this.getClientById = function( id ) {
@@ -24,4 +32,4 @@ function SocketPool() {
   };
 }
 
-exports.SocketPool = SocketPool;
+exports.ClientPool = ClientPool;
