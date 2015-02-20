@@ -15,10 +15,10 @@ function Protocol() {
     }
   };
 
-  this.register = function( ipAddress, nickName ) {
+  this.register = function( ident, nickName ) {
     msg.cmd = 'REGISTER';
-    msg.id = { ip: ipAddress, nick: nickName };
-    msg.prm = [];
+    msg.ident = ident;
+    msg.prm = [nickName];
     return JSON.stringify( msg );
   };
 
