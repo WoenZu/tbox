@@ -1,12 +1,11 @@
-var tutils = require( './tutils' );
-var fabric = require( './fabric').MessageFabric;
-var encoder = require( './encoder').Encoder;
-var userinfo = require( './userinfo').UserInfo;
-var client = require( './client').Client;
-var clientpool = require( './clientpool').ClientPool;
-var userDB = require( './userDB' ).UserDB;
-
-var proto = require( './protocol' ).Protocol;
+var tutils = require('./tutils');
+var fabric = require('./fabric').MessageFabric;
+var encoder = require('./encoder').Encoder;
+var userinfo = require('./userinfo').UserInfo;
+var client = require('./client').Client;
+var clientpool = require('./clientpool').ClientPool;
+var userDB = require('./userDB').UserDB;
+var proto = require('./protocol').Protocol;
 
 exports.tutils = tutils;
 exports.MessageFabric = fabric;
