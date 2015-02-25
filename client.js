@@ -1,9 +1,9 @@
 'use strict';
 
-function Client( socket ) {
+function Client(socket) {
   var sock = socket;
   var IP = socket.remoteAddress;
-  var port = socket.remotePort;
+  var port = String(socket.remotePort); // port from number to string
   var nickName = '';
   var isRegistered = false;
 
