@@ -3,30 +3,37 @@
 function Protocol() {
   var msg = {};
 
-  this.parseString = function( str ) {
+  this.parseString = function(str) {
     try {
-      return JSON.parse( str );
-    } catch( e ) {
-      console.log( e );
+      return JSON.parse(str);
+    } catch(e) {
+      console.log(e);
       return {
         'cmd': 'ERROR',
-        'prm': [ 'protocol parse error' ]
+        'prm': ['protocol parse error', str]
       }; //TODO test error message
     }
   };
 
-  this.register = function( ident, nickName ) {
+  this.register = function(ident, nickName) {
     msg.cmd = 'REGISTER';
     msg.ident = ident;
     msg.prm = [nickName];
-    return JSON.stringify( msg );
+    return JSON.stringify(msg);
   };
 
-  this.registered = function( str ) {
+  this.registered = function(str) {
     msg.cmd = 'REGISTERED';
     msg.id = {};
-    msg.prm = [ str ];
-    return JSON.stringify( msg );
+    msg.prm = [str];
+    return JSON.stringify(msg);
+  };
+
+  this.motd = function(str) {
+    msg.cmd = 'MOTD';
+    msg.id = {};
+    msg.prm = [str];
+    return JSON.stringify(msg);
   };
 }
 
