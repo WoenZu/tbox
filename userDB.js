@@ -2,6 +2,8 @@
 
 var fs = require('fs');
 var tutils = require('./tutils');
+var tbox = require('tbox');
+var userInfo = require('./userinfo');
 var splitIdent = tutils.splitIdent;
 
 function UserDB(filePath) {
@@ -18,11 +20,10 @@ function UserDB(filePath) {
     return path;
   };
 
-  this.createUser = function(ident, userName) {
-    var id = splitIdent(ident);
+  this.createUser = function(ip, nick) {
     var newUser = {};
-    newUser.IP = id[0];
-    newUser.nickname = userName;
+    newUser.IP = ip;
+    newUser.nick = nick;
     newUser.admin = false;
     newUser.avatar = '';
     newUser.status = 'pending'; // pending, active, banned
@@ -45,13 +46,18 @@ function UserDB(filePath) {
     this.saveDB();
   };
 
-  this.removeUser = function(user) {
-    // a  is index for delete
-    // userDB.users.splice( a, 1 );
+  this.removeUser = function(ip, nick) {
+    var index = this.getUserIndex(ip, nick);
+    if (index === (-1)) {
+      return false;
+    }
+    userDB.users.splice(index, 1);
+    this.saveDB();
+    return true;
   };
 
   this.createDefaultDB = function() {
-    this.addUser(this.createAdmin('127.0.0.1'));
+    this.addUser(this.createAdmin('127.0.0.1'));//TODO тут должен быть адрес хоста
     return userDB;
   };
 
@@ -85,14 +91,22 @@ function UserDB(filePath) {
     }
   };
 
-  this.checkForUser = function(ident, nick) {//TODO repeating code
-    var ip = splitIdent(ident);
-
+  this.checkForUser = function(ip, nick) {//TODO repeating code
     for (var i = 0; i < userDB.users.length; i++) {
-      if (userDB.users[i].IP === ip[0]) {
-        if (userDB.users[i].nickname === nick) { return true; }
+      if (userDB.users[i].IP === ip) {
+        if (userDB.users[i].nick === nick) { return true; }
       } else {
         return false;
+      }
+    }
+  };
+
+  this.getUserIndex = function(ip, nick) {
+    for (var i = 0; i < pool.length; i++) {
+      if (userDB.users[i].IP === ip) {
+        if (userDB.users[i].nick === nick) { return i; }
+      } else {
+        return -1;
       }
     }
   };
