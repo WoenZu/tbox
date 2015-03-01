@@ -43,13 +43,20 @@ function ClientPool() {
       if (pool[i].getIP() === ip) {
         if (pool[i].getPort() === port) { return i; }
       } else {
-        return null;
+        return -1;
       }
     }
   };
 
+  this.getClientByIndex = function(index) {
+    return pool[index];
+  };
+
   this.getPool = function() {
     return pool;
+  };
+  this.getLength = function() {
+    return pool.length;
   };
 }
 
