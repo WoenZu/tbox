@@ -3,7 +3,7 @@
 function Client(socket) {
   var sock = socket;
   var IP = socket.remoteAddress;
-  var port = String(socket.remotePort); // port from number to string
+  var port = String(socket.remotePort); // port - from number to string
   var nickName = '';
   var isRegistered = false;
 
@@ -17,6 +17,10 @@ function Client(socket) {
 
   this.register = function() {
     isRegistered = true;
+  };
+
+  this.isRegistered = function() {
+    return isRegistered;
   };
 
   this.getSocket = function() {
