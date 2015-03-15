@@ -26,7 +26,7 @@ function Encoder(k) {
     }
 
     for (i = 0; i < 256; i++) {
-      j = ( j + s[i] + key.charCodeAt(i % key.length) ) % 256;
+      j = (j + s[i] + key.charCodeAt(i % key.length)) % 256;
 
       x = s[i];
       s[i] = s[j];
@@ -37,14 +37,14 @@ function Encoder(k) {
     j = 0;
 
     for (var y = 0; y < str.length; y++) {
-      i = ( i + 1 ) % 256;
-      j = ( j + s[i]) % 256;
+      i = (i + 1) % 256;
+      j = (j + s[i]) % 256;
 
       x = s[i];
       s[i] = s[j];
       s[j] = x;
 
-      res += String.fromCharCode(str.charCodeAt(y) ^ s[( s[i] + s[j] ) % 256]);
+      res += String.fromCharCode(str.charCodeAt(y) ^ s[(s[i] + s[j]) % 256]);
     }
 
     return res;

@@ -1,0 +1,25 @@
+{
+  "name": "tbox",
+  "version": "0.0.0-alpha",
+  "description": "chat lib",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WoenZu/tbox.git"
+  },
+  "keywords": [
+    "tbox"
+  ],
+  "author": "WoenZu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WoenZu/tbox/issues"
+  },
+  "homepage": "https://github.com/WoenZu/tbox"
+}

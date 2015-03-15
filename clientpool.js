@@ -55,6 +55,7 @@ function ClientPool() {
   this.getPool = function() {
     return pool;
   };
+
   this.getLength = function() {
     return pool.length;
   };
