@@ -20,7 +20,7 @@ or
 
 ##Example
 
-An example can be seen here `https://github.com/WoenZu/server`
+An example can be seen [here](https://github.com/WoenZu/server)
 
 ##Dependencies
 For now don't have any dependencies.
