@@ -6,7 +6,7 @@ Decsription
 What is `tbox`?
 
 `Tbox` is a set of modules to create both the server
-and the client for `node`,`iojs` and `nwjs`.
+and the client for `node`, `iojs` and `nwjs`.
 
 Installing
 ----
@@ -25,7 +25,7 @@ An example can be seen [here](https://github.com/WoenZu/server)
 ##Dependencies
 For now don't have any dependencies.
 ##License
-See **LICENSE** file.
+See `LICENSE` file.
 
 ##Autor
 Andrey Lvov
