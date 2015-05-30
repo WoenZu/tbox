@@ -10,7 +10,7 @@ function Protocol() {
       console.log(e);
       return {
         'cmd': 'ERROR',
-        'prm': ['protocol parse error, string: \n', str]
+        'prm': ['protocol parse error, string: ', str]
       }; //TODO test error message
     }
   };
@@ -24,14 +24,14 @@ function Protocol() {
 
   this.registered = function(str) {
     msg.cmd = 'REGISTERED';
-    msg.ident = {};
+    msg.ident = '';
     msg.prm = [str];
     return JSON.stringify(msg);
   };
 
   this.motd = function(str) {
     msg.cmd = 'MOTD';
-    msg.ident = {};
+    msg.ident = '';
     msg.prm = [str];
     return JSON.stringify(msg);
   };
