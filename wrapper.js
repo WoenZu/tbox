@@ -2,13 +2,13 @@
 
 function Wrapper(s, m, e) {
   // separators
-  // s - start
-  // m - middle
-  // e - end
+  // s - start - '\x00\x00'
+  // m - middle - '\x00'
+  // e - end '\x0d0a'
 
-  var startSep = '';
-  var midSep = '';
-  var endSep = '';
+  var startSep = s;
+  var midSep = m;
+  var endSep = e;
 
   this.wrap = function(msg) {
     var str = String(msg);
