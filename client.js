@@ -4,6 +4,7 @@ function Client(socket) {
   var sock = socket;
   var IP = socket.remoteAddress;
   var port = String(socket.remotePort); // port - from number to string
+  var id = '';
   var nickName = '';
   var isRegistered = false;
 
@@ -27,10 +28,12 @@ function Client(socket) {
     return sock;
   };
 
-  this.getIdent = function() {
-    var ident = '';
-    ident = this.getIP() + ':' + this.getPort();
-    return ident;
+  this.setId = function(i) {
+    id = i;
+  };
+
+  this.getId = function() {
+    return id;
   };
 }
 

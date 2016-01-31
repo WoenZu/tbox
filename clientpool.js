@@ -20,15 +20,12 @@ function ClientPool() {
     }
   };
 
-  this.getClientById = function(ident) {
-    var id = splitIdent(ident);
-    var ip = id[0];
-    var port = id[1];
+  this.getClientById = function(_id) {
+    var id = _id;
 
     for (var i = 0; i < pool.length; i++) {
-      if (pool[i].getIP() === ip) {
-        if (pool[i].getPort() === port) {
-          return pool[i]; }
+      if (pool[i].getId === id) {
+        return pool[i];
       } else {
         return null;
       }
@@ -36,12 +33,11 @@ function ClientPool() {
   };
 
   this.getClientIndex = function(client) {
-    var ip = client.getIP();
-    var port = client.getPort();
+    var id = client.getId();
 
     for (var i = 0; i < pool.length; i++) {
-      if (pool[i].getIP() === ip) {
-        if (pool[i].getPort() === port) { return i; }
+      if (pool[i].getId() === id) {
+        return i;
       } else {
         return -1;
       }

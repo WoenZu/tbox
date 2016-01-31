@@ -36,10 +36,6 @@ function createPath( fileName ) {
 	return path;
 }
 
-function splitIdent( ident )  {
-  return ident.split( /\:/ );
-}
-
 function LogIt( mod ) {
 	var module = mod;
 	this.setModule = function( string ) {
@@ -51,7 +47,6 @@ function LogIt( mod ) {
 	};
 }
 
-exports.splitIdent = splitIdent;
 exports.loadFile = loadFile;
 exports.createPath = createPath;
 exports.LogIt = LogIt;

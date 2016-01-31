@@ -4,7 +4,6 @@ var fs = require('fs');
 var tutils = require('./tutils');
 var tbox = require('tbox');
 var userInfo = require('./userinfo');
-var splitIdent = tutils.splitIdent;
 
 function UserDB(filePath) {
   var path = filePath;
@@ -20,34 +19,32 @@ function UserDB(filePath) {
     return path;
   };
 
-  this.createUser = function(ip, nick) {
+  this.createUser = function(id, nick) {
     var newUser = {};
-    newUser.IP = ip;
+    newUser.id = id;
     newUser.nick = nick;
     newUser.admin = false;
     newUser.avatar = '';
     newUser.status = 'pending'; // pending, active, banned
-
-    //TODO проверка валидности ip адреса и никнейма
-
     return newUser;
   };
 
-  this.createAdmin = function(userIP) {
+  this.createAdmin = function(id, nick) {
     var admin = {};
-    admin = this.createUser(userIP, 'admin');
+    admin = this.createUser(id, nick);
     admin.admin = true;
     admin.status = 'active';
     return admin;
   };
 
   this.addUser = function(user) {
+    //TODO check for already created user with same id!
     userDB.users.push(user);
     this.saveDB();
   };
 
-  this.removeUser = function(ip, nick) {
-    var index = this.getUserIndex(ip, nick);
+  this.removeUser = function(id) {
+    var index = this.getUserIndex(id);
     if (index === (-1)) {
       return false;
     }
@@ -57,7 +54,7 @@ function UserDB(filePath) {
   };
 
   this.createDefaultDB = function() {
-    this.addUser(this.createAdmin('127.0.0.1'));//TODO тут должен быть адрес хоста
+    this.addUser(this.createAdmin('ADMIN', 'admin'));
     return userDB;
   };
 
@@ -91,20 +88,20 @@ function UserDB(filePath) {
     }
   };
 
-  this.checkForUser = function(ip, nick) {//TODO repeating code
+  this.checkForUser = function(id) {//TODO repeating code
     for (var i = 0; i < userDB.users.length; i++) {
-      if (userDB.users[i].IP === ip) {
-        if (userDB.users[i].nick === nick) { return true; }
+      if (userDB.users[i].id === id) {
+        return true;
       } else {
-        return false;
+        return false; // return (userDB.users[i].id === id) ??
       }
     }
   };
 
-  this.getUserIndex = function(ip, nick) {
+  this.getUserIndex = function(id) {
     for (var i = 0; i < pool.length; i++) {
-      if (userDB.users[i].IP === ip) {
-        if (userDB.users[i].nick === nick) { return i; }
+      if (userDB.users[i].id === id) {
+        return i;
       } else {
         return -1;
       }
