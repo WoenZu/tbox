@@ -15,30 +15,30 @@ function Protocol() {
     }
   };
 
-  this.register = function(ident, nickName) {
+  this.register = function(id, nickName) {
     msg.cmd = 'REGISTER';
-    msg.ident = ident;
+    msg.id = id;
     msg.prm = [nickName];
     return JSON.stringify(msg);
   };
 
   this.registered = function(str) {
     msg.cmd = 'REGISTERED';
-    msg.ident = '';
+    msg.id = '';
     msg.prm = [str];
     return JSON.stringify(msg);
   };
 
   this.motd = function(str) {
     msg.cmd = 'MOTD';
-    msg.ident = '';
+    msg.id = '';
     msg.prm = [str];
     return JSON.stringify(msg);
   };
 
-  this.text = function(ident, dest, str) {
+  this.text = function(id, dest, str) {
     msg.cmd = 'TEXT';
-    msg.ident = ident;
+    msg.id = id;
     msg.prm = [dest, str];
     return JSON.stringify(msg);
   }
