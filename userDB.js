@@ -37,20 +37,54 @@ function UserDB(filePath) {
     return admin;
   };
 
-  this.addUser = function(user) {
-    //TODO check for already created user with same id!
-    userDB.users.push(user);
-    this.saveDB();
-  };
-
-  this.removeUser = function(id) {
-    var index = this.getUserIndex(id);
-    if (index === (-1)) {
+  this.addUser = function(user) { // user is object like { id: 'TEST'}
+    if(!this.checkForUser(user.id)) {
+      userDB.users.push(user);
+      this.saveDB();
+      return true;
+    } else {
       return false;
     }
-    userDB.users.splice(index, 1);
-    this.saveDB();
-    return true;
+  };
+
+  this.getUser = function(userId) {
+    for(var i = 0; i < userDB.users.length; i++) {
+      if(userDB.users[i].id === userId) {
+        return userDB.users[i];
+      }
+    }
+  };
+
+  this.getAllUsers = function() {
+    return userDB.users;
+  };
+
+  this.removeUser = function(userId) {
+    var index = this.getUserIndex(userId);
+    if (index !== (-1)) {
+      userDB.users.splice(index, 1);
+      this.saveDB();
+      return true;
+    }
+    return false;
+  };
+
+  this.checkForUser = function(userId) {
+    for(var i = 0; i < userDB.users.length; i++) {
+      if(userDB.users[i].id === userId) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  this.getUserIndex = function(userId) {
+    for(var i = 0; i < userDB.users.length; i++) {
+      if(userDB.users[i].id === userId) {
+        return i;
+      }
+    }
+    return (-1);
   };
 
   this.createDefaultDB = function() {
@@ -67,9 +101,9 @@ function UserDB(filePath) {
       // TODO понадобится обрабатывать ситуационные ошибки и в
       // зависимости от конкретной ошибки выполнять соответствующие действаия
       // в том числе если вываливается исключение на синтаксис JSON файла
-      console.log('create default DB');
+      console.log('[DEBUG] create default DB');
       userDB = this.createDefaultDB();
-      this.tryToWrite('default DB');
+      this.tryToWrite('default DB');//TODO шозанах?????
     }
   };
 
@@ -85,26 +119,6 @@ function UserDB(filePath) {
     } catch (err) {
       console.log(err);
       console.log('[DEBUG] unable to save %s with path: %j', str, path);
-    }
-  };
-
-  this.checkForUser = function(id) {//TODO repeating code
-    for (var i = 0; i < userDB.users.length; i++) {
-      if (userDB.users[i].id === id) {
-        return true;
-      } else {
-        return false; // return (userDB.users[i].id === id) ??
-      }
-    }
-  };
-
-  this.getUserIndex = function(id) {
-    for (var i = 0; i < pool.length; i++) {
-      if (userDB.users[i].id === id) {
-        return i;
-      } else {
-        return -1;
-      }
     }
   };
 }
