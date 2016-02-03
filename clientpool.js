@@ -1,13 +1,16 @@
 'use strict';
 
-var tutils = require('./tutils');
-var splitIdent = tutils.splitIdent;
-
 function ClientPool() {
   var pool = [];
 
   this.addClient = function(client) {
+    var id = client.getId();
+    if(this.getClientById(id) !== null) {
+      console.log('[ERROR-ClientPool] User ' + id + ' already exist.');
+      return false;
+    }
     pool.push(client);
+    return true;
   };
 
   this.removeClient = function(client) {
@@ -16,15 +19,13 @@ function ClientPool() {
       pool.splice(index, 1);
     } catch (err) {
       console.log(err);
-      console.log('[ERROR] Client is not found.');
+      console.log('[ERROR-ClientPool] Client is not found.');
     }
   };
 
-  this.getClientById = function(_id) {
-    var id = _id;
-
-    for (var i = 0; i < pool.length; i++) {
-      if (pool[i].getId === id) {
+  this.getClientById = function(id) {
+    for(var i = 0; i < pool.length; i++) {
+      if(pool[i].getId() === id) {
         return pool[i];
       } else {
         return null;
@@ -35,8 +36,8 @@ function ClientPool() {
   this.getClientIndex = function(client) {
     var id = client.getId();
 
-    for (var i = 0; i < pool.length; i++) {
-      if (pool[i].getId() === id) {
+    for(var i = 0; i < pool.length; i++) {
+      if(pool[i].getId() === id) {
         return i;
       } else {
         return -1;
