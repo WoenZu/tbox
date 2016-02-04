@@ -13,6 +13,15 @@ function ClientPool() {
     return true;
   };
 
+  this.checkForClient = function(clientObj) {
+    for(var i = 0; i < pool.length; i++) {
+      if(pool[i] === clientObj) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   this.removeClient = function(client) {
     var  index = this.getClientIndex(client);
     try {
@@ -23,26 +32,23 @@ function ClientPool() {
     }
   };
 
-  this.getClientById = function(id) {
+  this.getClientById = function(userId) {
     for(var i = 0; i < pool.length; i++) {
-      if(pool[i].getId() === id) {
+      if(pool[i].getId() === userId) {
         return pool[i];
-      } else {
-        return null;
       }
     }
+    return null;
   };
 
-  this.getClientIndex = function(client) {
+  this.getClientIndex = function(client) { //client is object of client.js
     var id = client.getId();
-
     for(var i = 0; i < pool.length; i++) {
       if(pool[i].getId() === id) {
         return i;
-      } else {
-        return -1;
       }
     }
+    return -1;
   };
 
   this.getClientByIndex = function(index) {
