@@ -49,12 +49,20 @@ function Client(socket) {
     return nickName;
   };
 
-  this.importUserFormDB = function(user) {
-    id = user.id;
-    nickName = user.nick;
-    isAdmin = user.admin;
-    avatar = user.avatar;
-    status = user.status;
+  this.importUserFromDB = function(userObj) { // user is user object
+    id = userObj.id;
+    nickName = userObj.nick;
+    isAdmin = userObj.admin;
+    avatar = userObj.avatar;
+    status = userObj.status;
+  };
+  this.getUserData = function() {
+    return {
+    nick : nickName,
+    isAdmin : isAdmin,
+    avatar : avatar,
+    status : status
+    }
   };
 
   //debug function
