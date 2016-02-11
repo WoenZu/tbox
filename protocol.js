@@ -11,7 +11,7 @@ function Protocol() {
       return {
         'cmd': 'ERROR',
         'prm': ['protocol parse error, string: ', str]
-      }; //TODO test error message
+      };
     }
   };
 
