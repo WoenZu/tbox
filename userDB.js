@@ -40,7 +40,6 @@ function UserDB(filePath) {
   this.addUser = function(user) { // user is object like { id: 'TEST'}
     if(!this.checkForUser(user.id)) {
       userDB.users.push(user);
-      this.saveDB();
       return true;
     } else {
       return false;
@@ -63,7 +62,6 @@ function UserDB(filePath) {
     var index = this.getUserIndex(userId);
     if (index !== (-1)) {
       userDB.users.splice(index, 1);
-      this.saveDB();
       return true;
     }
     return false;
@@ -95,15 +93,12 @@ function UserDB(filePath) {
   this.loadDB = function() {
     try {
       userDB = JSON.parse(fs.readFileSync(path));
-      console.log('[DEBUG] DB loading [OK]');
+      console.log('[USERDB] DB loading [OK]');
     } catch(e) {
-      console.log(e);
-      // TODO понадобится обрабатывать ситуационные ошибки и в
-      // зависимости от конкретной ошибки выполнять соответствующие действаия
-      // в том числе если вываливается исключение на синтаксис JSON файла
-      console.log('[DEBUG] create default DB');
+      console.log('[USERDB] ' + e.message);
+      console.log('[USERDB] create default DB');
       userDB = this.createDefaultDB();
-      this.tryToWrite('default DB');//TODO шозанах?????
+      this.tryToWrite('default DB');
     }
   };
 
@@ -115,10 +110,10 @@ function UserDB(filePath) {
   this.tryToWrite = function(str) {
     try {
       fs.writeFileSync(path, JSON.stringify(userDB));
-      console.log('[DEBUG] %s successfully saved!', str);
+      console.log('[USERDB] %s successfully saved!', str);
     } catch (err) {
       console.log(err);
-      console.log('[DEBUG] unable to save %s with path: %j', str, path);
+      console.log('[USERDB] unable to save %s with path: %j', str, path);
     }
   };
 }
