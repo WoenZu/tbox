@@ -56,6 +56,7 @@ function Client(socket) {
     avatar = userObj.avatar;
     status = userObj.status;
   };
+
   this.getUserData = function() {
     return {
     nick : nickName,
