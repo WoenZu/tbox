@@ -1,9 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var tutils = require('./tutils');
-var tbox = require('tbox');
-var userInfo = require('./userinfo');
+//var tutils = require('./tutils');
 
 function UserDB(filePath) {
   var path = filePath;
@@ -93,7 +91,7 @@ function UserDB(filePath) {
   this.loadDB = function() {
     try {
       userDB = JSON.parse(fs.readFileSync(path));
-      console.log('[USERDB] DB loading [OK]');
+      console.log('[USERDB] user data base loading [OK]');
     } catch(e) {
       console.log('[USERDB] ' + e.message);
       console.log('[USERDB] create default DB');
@@ -112,7 +110,7 @@ function UserDB(filePath) {
       fs.writeFileSync(path, JSON.stringify(userDB));
       console.log('[USERDB] %s successfully saved!', str);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
       console.log('[USERDB] unable to save %s with path: %j', str, path);
     }
   };
