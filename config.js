@@ -18,12 +18,16 @@ function Config(filePath) {
     config.MOTD = 'hi, this is config.js module of tbox library';
     config.Port = '6666';
     config.ip = '';
+    return config;
   };
 
   //this.setProperty = function()
-  //this.getProperty = function()
 
-  this.loadConfig = function() {
+  this.getProperty = function(prop) {
+    return config[prop];
+  };
+
+  this.load = function() {
     try {
       config = JSON.parse(fs.readFileSync(path));
       console.log('[CONFIG] configuration loading [OK]');
@@ -35,7 +39,7 @@ function Config(filePath) {
     }
   };
 
-  this.saveConfig = function() {
+  this.save = function() {
     //TODO необходимо сделать асинхронную запсь
     this.tryToWrite('configuration');
   };
