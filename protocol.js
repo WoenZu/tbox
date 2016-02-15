@@ -7,11 +7,8 @@ function Protocol() {
     try {
       return JSON.parse(str);
     } catch(e) {
-      console.log(e);
-      return {
-        'cmd': 'ERROR',
-        'prm': ['protocol parse error, string: ', str]
-      };
+      console.log(e.message);
+      return this.error('protocol parse error: ' + str);
     }
   };
 
@@ -41,7 +38,14 @@ function Protocol() {
     msg.id = id;
     msg.prm = [dest, str];
     return JSON.stringify(msg);
-  }
+  };
+
+  this.error = function(str) {
+    msg.cmd = 'ERROR';
+    msg.id = '';
+    msg.prm = [str];
+    return JSON.stringify(msg);
+  };
 }
 
 exports.Protocol = Protocol;
