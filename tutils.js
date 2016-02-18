@@ -1,32 +1,20 @@
 'use strict';
 
-var fs = require( 'fs' );
+var fs = require('fs');
 
-function loadFile(filePath, defaultContent) {
+function tryToWrite(str, content, path) {
 	try {
-		var conf = fs.readFileSync( filePath );
-		console.log( '[DEBUG] configuration loading [OK]' );
-		return JSON.parse( conf );
-	} catch( e ) {
-		console.log( e );
-		// TODO понадобится обрабатывать ситуационные ошибки и в
-		// зависимости от конкретной ошибки выполнять соответствующие действаия
-		// в том числе если вываливается исключение на синтаксис JSON файла
-		console.log( 'create a configuration with the default settings' );
-
-		try {
-			fs.writeFileSync( filePath, JSON.stringify( defaultContent ) );
-			console.log( '[DEBUG] writing configuration to file [OK]' );
-		} catch( e ) {
-			console.log( '[DEBUG] unable to write default config.json file to disk' );
-		}
-		return defaultContent;
+		fs.writeFileSync(path, JSON.stringify(content));
+		console.log('%s successfully saved!', str);
+	} catch (err) {
+		console.log(err.message);
+		console.log('unable to save %s with path: %j', str, path);
 	}
 }
 
-function createPath( fileName ) {
+function createPath(fileName) {
 	var path = '';
-	if ( process.platform === 'win32' ) {
+	if (process.platform === 'win32') {
 		path = process.cwd() + '\\' + fileName;
 	} else if (process.platform === 'darwin') {
 		path = process.cwd() + '/' + fileName;
@@ -36,17 +24,17 @@ function createPath( fileName ) {
 	return path;
 }
 
-function LogIt( mod ) {
+function LogIt(mod) {
 	var module = mod;
-	this.setModule = function( string ) {
+	this.setModule = function(string) {
 		module = string;
 	};
 
-	this.logIt = function( string ) {
-		console.log( module + ' : ' + string );
+	this.logIt = function(string) {
+		console.log(module + ' : ' + string);
 	};
 }
 
-exports.loadFile = loadFile;
+exports.tryToWrite = tryToWrite;
 exports.createPath = createPath;
 exports.LogIt = LogIt;
