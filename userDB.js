@@ -102,7 +102,6 @@ function UserDB(filePath) {
   };
 
   this.saveDB = function() {
-    //TODO необходимо сделать асинхронную запсь
     tryToWrite('userDB', userDB, path);
   };
 

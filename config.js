@@ -42,7 +42,6 @@ function Config(filePath) {
   };
 
   this.save = function() {
-    //TODO необходимо сделать асинхронную запсь
     tryToWrite('configuration', config, path);
   };
 
