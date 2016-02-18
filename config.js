@@ -1,6 +1,8 @@
 'use strict';
 
 var fs = require('fs');
+var tutils = require('./tutils');
+var tryToWrite = tutils.tryToWrite;
 
 function Config(filePath) {
   var path = filePath;
@@ -35,24 +37,15 @@ function Config(filePath) {
       console.log('[CONFIG] ' + e.message);
       console.log('[CONFIG] creating default configuration');
       config = this.createDefaultConfig();
-      this.tryToWrite('default configuration');
+      tryToWrite('default configuration', config, path);
     }
   };
 
   this.save = function() {
     //TODO необходимо сделать асинхронную запсь
-    this.tryToWrite('configuration');
+    tryToWrite('configuration', config, path);
   };
 
-  this.tryToWrite = function(str) {
-    try {
-      fs.writeFileSync(path, JSON.stringify(config));
-      console.log('[CONFIG] %s successfully saved!', str);
-    } catch (err) {
-      console.log(err.message);
-      console.log('[CONFIG] unable to save %s with path: %j', str, path);
-    }
-  };
 }
 
 exports.Config = Config;

@@ -1,7 +1,8 @@
 'use strict';
 
 var fs = require('fs');
-//var tutils = require('./tutils');
+var tutils = require('./tutils');
+var tryToWrite = tutils.tryToWrite;
 
 function UserDB(filePath) {
   var path = filePath;
@@ -96,24 +97,15 @@ function UserDB(filePath) {
       console.log('[USERDB] ' + e.message);
       console.log('[USERDB] create default DB');
       userDB = this.createDefaultDB();
-      this.tryToWrite('default DB');
+      tryToWrite('default DB', userDB, path);
     }
   };
 
   this.saveDB = function() {
     //TODO необходимо сделать асинхронную запсь
-    this.tryToWrite('userDB');
+    tryToWrite('userDB', userDB, path);
   };
 
-  this.tryToWrite = function(str) {
-    try {
-      fs.writeFileSync(path, JSON.stringify(userDB));
-      console.log('[USERDB] %s successfully saved!', str);
-    } catch (err) {
-      console.log(err.message);
-      console.log('[USERDB] unable to save %s with path: %j', str, path);
-    }
-  };
 }
 
 exports.UserDB = UserDB;
