@@ -7,7 +7,7 @@ function Protocol() {
     try {
       return JSON.parse(str);
     } catch(e) {
-      console.log(e.message);
+      console.log('[PARSER]: ' + e);
       return this.error('protocol parse error: ' + str);
     }
   };
