@@ -5,8 +5,9 @@ var clientpool = require('./clientpool').ClientPool;
 var userDB = require('./userDB').UserDB;
 var proto = require('./protocol').Protocol;
 var config = require('./config').Config;
+var createPath = require('./utils/create_path').createPath;
+var tryToWrite = require('./utils/try_to_write').tryToWrite;
 
-exports.tutils = tutils;
 exports.Encoder = encoder;
 exports.UserInfo = userinfo;
 exports.Client = client;
@@ -14,3 +15,5 @@ exports.ClientPool = clientpool;
 exports.UserDB = userDB;
 exports.Protocol = proto;
 exports.Config = config;
+exports.createPath = createPath;
+exports.tryToWrite = tryToWrite;
