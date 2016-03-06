@@ -1,8 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var utils = require('./utils/try_to_write');
-var tryToWrite = utils.tryToWrite;
+var tryToWrite = require('./utils/try_to_write').tryToWrite;
 
 function UserDB(filePath) {
   var path = filePath;

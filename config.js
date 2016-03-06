@@ -1,8 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var utils = require('./utils/try_to_write');
-var tryToWrite = utils.tryToWrite;
+var tryToWrite = require('./utils/try_to_write').tryToWrite;
 
 function Config(filePath) {
   var path = filePath;
@@ -27,6 +26,10 @@ function Config(filePath) {
 
   this.getProperty = function(prop) {
     return config[prop];
+  };
+
+  this.getConfig = function() {
+    return config;
   };
 
   this.load = function() {
