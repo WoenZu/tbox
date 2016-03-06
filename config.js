@@ -1,8 +1,8 @@
 'use strict';
 
 var fs = require('fs');
-var tutils = require('./tutils');
-var tryToWrite = tutils.tryToWrite;
+var utils = require('./utils/try_to_write');
+var tryToWrite = utils.tryToWrite;
 
 function Config(filePath) {
   var path = filePath;
