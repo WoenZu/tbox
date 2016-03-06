@@ -1,4 +1,3 @@
-var tutils = require('./tutils');
 var encoder = require('./encoder').Encoder;
 var userinfo = require('./userinfo').UserInfo;
 var client = require('./client').Client;
